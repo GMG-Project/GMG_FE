@@ -40,88 +40,55 @@ export default function DicePage() {
   const resultLabel = rollIndex !== null ? items[rollIndex] : null;
 
   return (
-    <main className="min-h-screen w-full bg-yellow-400 flex items-center justify-center p-6">
-      <section className="w-full max-w-4xl bg-white rounded-2xl shadow-xl p-6">
+    <main className="min-h-screen w-full bg-yellow-400 flex flex-col items-center justify-center p-6">
+      <h1 className="mb-6 text-5xl sm:text-6xl font-extrabold text-white tracking-tight">주행</h1>
+      <section className="relative w-full max-w-4xl bg-white rounded-2xl shadow-xl p-6">
         <header className="mb-4 flex items-center justify-between">
-          <h1 className="text-xl font-bold text-gray-900">주사위 굴리기 🎲</h1>
-          <div className="flex gap-2">
-            <button
-              onClick={() =>
-                router.push(`/GameMode?areas=${encodeURIComponent(items.join(","))}`)
-              }
-              className="rounded-full bg-gray-100 px-4 h-10 text-gray-700 font-medium shadow hover:shadow-md"
-            >
-              ← 방식 다시 선택
-            </button>
-            <button
-              onClick={() => router.push("/RegionSelect")}
-              className="rounded-full bg-gray-100 px-4 h-10 text-gray-700 font-medium shadow hover:shadow-md"
-            >
-              지역 다시 선택
-            </button>
-          </div>
+          <h2 className="text-xl sm:text-2xl font-extrabold text-gray-900">주사위를 굴려 여행지를 정해보세요.</h2>
+          {canPlay && <span className="text-sm text-gray-400">{faces}면체</span>}
         </header>
-
-        <p className="text-sm text-gray-600 mb-6">
-          대상(지역): {items.length ? items.join(", ") : "없음"}{" "}
-          {faces ? `(현재 ${faces}면체)` : ""}
-        </p>
 
         {!canPlay ? (
           <div className="rounded-xl border border-dashed border-gray-300 p-6 text-center text-gray-500">
             최소 2개 이상의 지역이 필요합니다.
-            <div className="mt-3">
-              <button
-                onClick={() => router.push("/RegionSelect")}
-                className="rounded-full bg-yellow-400 px-4 h-10 text-white font-semibold shadow hover:brightness-95"
-              >
-                지역 선택하러 가기 →
-              </button>
-            </div>
           </div>
         ) : (
-          <>
-            <div className="flex items-center gap-4">
-              <button
-                onClick={roll}
-                className="rounded-full px-5 h-11 bg-yellow-400 text-white font-semibold shadow hover:brightness-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-yellow-400"
-              >
+          <div className="relative">
+            {/* 결과 디스플레이 영역 */}
+            <div className="mx-auto h-64 sm:h-72 bg-yellow-500/80 rounded-md flex items-center justify-center select-none">
+              {resultLabel ? (
+                <span className="text-white text-2xl sm:text-4xl font-extrabold drop-shadow">{resultLabel}!</span>
+              ) : (
+                <div className="h-16 w-16 rounded-lg bg-white/90 shadow flex items-center justify-center text-2xl font-bold text-gray-700">?</div>
+              )}
+            </div>
+
+            {/* 중앙 버튼들 */}
+            <div className="mt-4 flex items-center justify-center gap-3">
+              <button onClick={roll} className="h-9 px-5 rounded-md border border-yellow-300 bg-white text-sm font-semibold text-gray-800 hover:shadow">
                 굴리기
               </button>
-
-              <div className="text-lg">
-                {resultLabel ? (
-                  <>
-                    🎉 결과: <span className="font-semibold">
-                      {rollIndex! + 1}번 — {resultLabel}
-                    </span>
-                  </>
-                ) : (
-                  "결과 대기…"
-                )}
-              </div>
+              <button onClick={() => setRollIndex(null)} className="h-9 px-5 rounded-md border border-yellow-300 bg-white text-sm font-semibold text-gray-800 hover:shadow">
+                새 게임
+              </button>
             </div>
 
-            {/* 번호-지역 테이블 */}
-            <div className="mt-6 overflow-x-auto">
-              <table className="w-full text-left border border-gray-200 rounded-xl overflow-hidden">
-                <thead className="bg-gray-50">
-                  <tr>
-                    <th className="px-4 py-2 text-gray-700 font-semibold">번호</th>
-                    <th className="px-4 py-2 text-gray-700 font-semibold">지역</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {items.map((area, i) => (
-                    <tr key={area} className={`border-t ${rollIndex === i ? "bg-yellow-50" : ""}`}>
-                      <td className="px-4 py-2 text-gray-500">{i + 1}</td>
-                      <td className="px-4 py-2">{area}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </>
+            {/* 좌우 화살표 */}
+            <button
+              onClick={() => router.push(`/GameMode?areas=${encodeURIComponent(items.map(encodeURIComponent).join(","))}`)}
+              aria-label="이전"
+              className="absolute -bottom-6 left-4 h-10 w-10 rounded-full bg-white shadow flex items-center justify-center hover:shadow-md"
+            >
+              <img src="/leftArrow.svg" alt="이전" className="h-5 w-5" />
+            </button>
+            <button
+              onClick={roll}
+              aria-label="다음"
+              className="absolute -bottom-6 right-4 h-10 w-10 rounded-full bg-white shadow flex items-center justify-center hover:shadow-md"
+            >
+              <img src="/rightArrow.svg" alt="굴리기" className="h-5 w-5" />
+            </button>
+          </div>
         )}
       </section>
     </main>

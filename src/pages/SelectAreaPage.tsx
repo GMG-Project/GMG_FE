@@ -38,35 +38,31 @@ export default function SelectAreaPage() {
     };
 
     return (
-        <main className="min-h-screen w-full bg-yellow-400/90 flex items-center justify-center p-6">
-            <section className="w-full max-w-4xl bg-white rounded-2xl shadow-xl p-6">
-                <header className="mb-6 flex items-center justify-between">
-                    <h1 className="text-2xl font-extrabold text-yellow-500 tracking-tight">지역 선택</h1>
-                    <button 
-                        onClick={() => router.push('/CreateSchedulePage')} 
-                        className="rounded-full bg-gray-100 px-4 h-10 text-gray-700 font-medium shadow hover:shadow-md"
-                    >
-                        ← 이전 단계
-                    </button>
+        <main className="min-h-screen w-full bg-yellow-400 flex flex-col items-center justify-center p-6">
+            {/* 상단 로고/타이틀 */}
+            <h1 className="mb-6 text-5xl sm:text-6xl font-extrabold text-white tracking-tight">즉행</h1>
+
+            {/* 컨테이너 카드 */}
+            <section className="relative w-full max-w-4xl bg-white rounded-2xl shadow-xl p-6">
+                <header className="mb-6">
+                    <h2 className="text-xl sm:text-2xl font-extrabold tracking-tight text-gray-900">
+                        게임에 포함할 지역을 선택하세요.
+                    </h2>
                 </header>
 
-                <div className="mb-6">
-                    <h2 className="text-lg font-semibold mb-4">여행하고 싶은 지역을 선택하세요</h2>
-                    <p className="text-sm text-gray-600 mb-4">
-                        선택된 지역: {selectedAreas.length}개
-                    </p>
+                <div className="mb-2">
                     <SelectArea selected={selectedAreas} onSelect={handleAreaSelect} />
                 </div>
 
-                <div className="flex justify-end">
-                    <button
-                        onClick={handleNext}
-                        disabled={selectedAreas.length === 0}
-                        className="px-6 py-3 bg-yellow-400 text-white font-semibold rounded-lg shadow hover:bg-yellow-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-                    >
-                        다음 단계로 ({selectedAreas.length}개 지역 선택됨)
-                    </button>
-                </div>
+                {/* 우하단 진행 버튼 */}
+                <button
+                    onClick={handleNext}
+                    disabled={selectedAreas.length === 0}
+                    aria-label="다음 단계"
+                    className="absolute -bottom-5 -right-5 h-12 w-12 rounded-full bg-yellow-400 shadow-lg flex items-center justify-center hover:bg-yellow-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                >
+                    <img src="/rightArrow.svg" alt="다음" className="h-6 w-6" />
+                </button>
             </section>
         </main>
     );

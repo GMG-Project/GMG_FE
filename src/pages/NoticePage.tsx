@@ -66,7 +66,7 @@ export default function NoticePage() {
         <div className="mx-auto max-w-5xl px-4 h-14 flex items-center justify-between">
           <div className="flex items-center gap-2">
             {/* 로고 대체 텍스트 */}
-            <span className="text-2xl font-extrabold text-yellow-500 select-none">쭈행</span>
+            <span className="text-2xl font-extrabold text-yellow-500 select-none">즉행</span>
           </div>
           <div className="flex items-center gap-4 text-gray-600">
             <PersonIcon />
